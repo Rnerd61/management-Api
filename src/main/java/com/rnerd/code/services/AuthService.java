@@ -38,7 +38,7 @@ public class AuthService {
 
         if ((authRepo.findByUsername(username) != null) || (authRepo.findByEmail(email) != null) ) return new ResponseEntity<>("User Already Exists", HttpStatus.FORBIDDEN);
 
-//        password = passwordEncoder.encode(password);
+       password = passwordEncoder.encode(password);
         Roles roles;
 
         try {
