@@ -1,9 +1,11 @@
 package com.rnerd.code.models;
 
-public enum Roles {
+import org.springframework.security.core.GrantedAuthority;
+
+public enum Roles  {
     ServiceCentre,
     PlanningTeam,
     WareHouseTeam,
-    CustomerSupport
+    CustomerSupport;
 }
 

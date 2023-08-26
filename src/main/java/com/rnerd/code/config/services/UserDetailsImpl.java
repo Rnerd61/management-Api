@@ -14,9 +14,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
-@Getter
+
 @Setter
+@Getter
 @EqualsAndHashCode
 public class UserDetailsImpl implements UserDetails {
 
@@ -26,7 +28,6 @@ public class UserDetailsImpl implements UserDetails {
 
     private String email;
 
-    @JsonIgnore
     private String password;
 
     private Collection<? extends GrantedAuthority> authorities;
@@ -40,7 +41,7 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public static UserDetailsImpl build(UserModel user) {
-        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole().toString()));
+        Collection<? extends GrantedAuthority> authorities =  Collections.singletonList(new SimpleGrantedAuthority(user.getRole().name()));
 
         return new UserDetailsImpl(
                 user.getId(),
@@ -49,7 +50,6 @@ public class UserDetailsImpl implements UserDetails {
                 user.getPassword(),
                 authorities);
     }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;

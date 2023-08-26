@@ -40,11 +40,11 @@ public class JwtUtils {
 
     public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
         String jwt = generateToken(userPrincipal.getUsername(), userPrincipal.getAuthorities());
-        return ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(60 * 60).httpOnly(true).build();
+        return ResponseCookie.from(jwtCookie, jwt).path("/").maxAge(60 * 60).httpOnly(true).build();
     }
 
     public ResponseCookie getCleanJwtCookie() {
-        return ResponseCookie.from(jwtCookie, null).path("/api").build();
+        return ResponseCookie.from(jwtCookie, null).path("/").build();
     }
 
     public String getUserNameFromJwtToken(String token) {
@@ -66,8 +66,8 @@ public class JwtUtils {
     }
 
     public String generateToken(String username, Collection<? extends GrantedAuthority> authorities) {
-        Map<String, List> claimsMap = new HashMap<>();
-        claimsMap.put("Role", authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
+        Map<String, List<String>> claimsMap = new HashMap<>();
+        claimsMap.put("auth", authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
         return Jwts.builder()
                 .setClaims(claimsMap)
                 .setSubject(username)

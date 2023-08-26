@@ -54,12 +54,15 @@ public class WebSecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception{
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((auth) ->  auth
-                        .requestMatchers("/api/v1/auth/**", "/", "/error").permitAll()
-                        .requestMatchers("/api/v1/planning/**").hasRole("PlanningTeam")
-                        .requestMatchers("/home").hasRole("WareHouseTeam")
+                        .requestMatchers("/api/v*/auth/**", "/error").permitAll()
+                        .requestMatchers("/api/v*/sc/**").hasAuthority("ServiceCentre")
+                        .requestMatchers("/api/v*/pt/**").hasAuthority("PlanningTeam")
+                        .requestMatchers("/api/v*/wt/**").hasAuthority("WareHouseTeam")
+                        .requestMatchers("/api/v*/cs/**").hasAuthority("CustomerSupport")
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())

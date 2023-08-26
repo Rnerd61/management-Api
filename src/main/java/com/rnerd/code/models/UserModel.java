@@ -5,8 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Reference;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.HashSet;
 
 
 @Document(collection = "user")
@@ -21,6 +24,7 @@ public class UserModel {
     private String username;
     private String password;
     private String email;
+
     private Roles role;
 
     public UserModel(String username, String password) {
