@@ -1,0 +1,65 @@
+package com.rnerd.code.services;
+
+import com.rnerd.code.config.jwt.JwtUtils;
+import com.rnerd.code.config.services.UserDetailsImpl;
+import com.rnerd.code.models.Roles;
+import com.rnerd.code.models.UserModel;
+import com.rnerd.code.payload.request.LoginRequest;
+import com.rnerd.code.repository.AuthRepo;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+@Service @RequiredArgsConstructor
+public class AuthService {
+
+    private final AuthRepo authRepo;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtils jwtUtils;
+
+    public ResponseEntity<String> register(String username, String password, String email, String role) {
+
+        if ((authRepo.findByUsername(username) != null) || (authRepo.findByEmail(email) != null) ) return new ResponseEntity<>("User Already Exists", HttpStatus.FORBIDDEN);
+
+//        password = passwordEncoder.encode(password);
+        Roles roles;
+
+        try {
+            roles = Roles.valueOf(role);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Role Does Not Exists", HttpStatus.BAD_REQUEST);
+        }
+
+        authRepo.insert(new UserModel(username, password, email, roles));
+        return new ResponseEntity<>("User Registered SuccessFully", HttpStatus.OK);
+    }
+
+
+    public String login(LoginRequest loginRequest){
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+        return jwtUtils.generateJwtCookie(userDetails).toString();
+    }
+
+}
