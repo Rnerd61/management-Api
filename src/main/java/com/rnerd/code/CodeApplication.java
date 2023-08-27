@@ -29,10 +29,6 @@ public class CodeApplication {
         return "Hello World";
     }
 
-    @GetMapping("/error1")
-    public String errorRoot(){
-        return "Hello World";
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

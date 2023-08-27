@@ -52,7 +52,6 @@ public class AuthService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
         return jwtUtils.generateJwtCookie(userDetails).toString();
     }
 

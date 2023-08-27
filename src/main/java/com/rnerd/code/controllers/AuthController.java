@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -27,7 +28,8 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        return ResponseEntity.ok().body(ResponseMsg.Msg(authService.login(loginRequest)));
+        Map<String, String> res = ResponseMsg.Msg(List.of("msg", "success"),List.of(authService.login(loginRequest), "1"));
+        return ResponseEntity.ok().body(res);
     }
 
 
