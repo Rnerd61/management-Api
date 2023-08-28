@@ -1,4 +1,4 @@
-package com.rnerd.code.models;
+package com.rnerd.code.models.Globals;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -19,7 +19,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class products {
+public class Products {
 
     @Id
     ObjectId id;
@@ -31,5 +31,5 @@ public class products {
     String name;
 
     @DBRef
-    Set<spareParts> sparePartsList = new HashSet<>();
+    Set<SpareParts> sparePartsList = new HashSet<>();
 }

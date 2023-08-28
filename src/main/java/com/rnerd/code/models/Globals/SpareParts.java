@@ -1,4 +1,4 @@
-package com.rnerd.code.models;
+package com.rnerd.code.models.Globals;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -7,7 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "spareParts")
-public class spareParts {
+public class SpareParts {
 
     @Id
     ObjectId id;

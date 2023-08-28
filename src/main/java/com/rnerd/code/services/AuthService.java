@@ -2,10 +2,10 @@ package com.rnerd.code.services;
 
 import com.rnerd.code.config.jwt.JwtUtils;
 import com.rnerd.code.config.services.UserDetailsImpl;
-import com.rnerd.code.models.Roles;
-import com.rnerd.code.models.UserModel;
+import com.rnerd.code.models.Globals.Roles;
+import com.rnerd.code.models.Globals.EmployeeModel;
 import com.rnerd.code.payload.request.LoginRequest;
-import com.rnerd.code.payload.request.ResponseMsg;
+import com.rnerd.code.payload.response.ResponseMsg;
 import com.rnerd.code.repository.AuthRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -41,7 +41,7 @@ public class AuthService {
             return new ResponseEntity<>(ResponseMsg.Msg("User Not Found"), HttpStatus.BAD_REQUEST);
         }
 
-        authRepo.insert(new UserModel(username, _password, email, roles));
+        authRepo.insert(new EmployeeModel(username, _password, email, roles));
         return new ResponseEntity<>(ResponseMsg.Msg("User Registered SuccessFully"), HttpStatus.OK);
     }
 

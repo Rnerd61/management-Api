@@ -1,6 +1,6 @@
 package com.rnerd.code.controllers;
 
-import com.rnerd.code.payload.request.ResponseMsg;
+import com.rnerd.code.payload.response.ResponseMsg;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,6 @@
 package com.rnerd.code.config.services;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.rnerd.code.models.UserModel;
+import com.rnerd.code.models.Globals.EmployeeModel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,9 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 
 @Setter
@@ -40,7 +36,7 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserDetailsImpl build(UserModel user) {
+    public static UserDetailsImpl build(EmployeeModel user) {
         Collection<? extends GrantedAuthority> authorities =  Collections.singletonList(new SimpleGrantedAuthority(user.getRole().name()));
 
         return new UserDetailsImpl(
@@ -50,6 +46,11 @@ public class UserDetailsImpl implements UserDetails {
                 user.getPassword(),
                 authorities);
     }
+
+    public String getEmail(){
+        return this.email;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

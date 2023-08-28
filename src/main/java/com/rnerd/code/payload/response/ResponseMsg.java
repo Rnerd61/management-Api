@@ -1,4 +1,4 @@
-package com.rnerd.code.payload.request;
+package com.rnerd.code.payload.response;
 
 import java.util.HashMap;
 import java.util.List;

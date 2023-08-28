@@ -1,4 +1,4 @@
-package com.rnerd.code.models;
+package com.rnerd.code.models.Globals;
 
 public enum Roles  {
     ServiceCentre,
