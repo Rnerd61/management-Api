@@ -19,6 +19,7 @@ public class ServiceTeamController {
 
     @PostMapping("/customer")
     public ResponseEntity<Map<String, String>> CustomerDetailController(@Valid @RequestBody CustomerReq customerReq){
+
         Map<String, String> res = ResponseMsg.Msg("Details Added Successfully");
         return ResponseEntity.ok().body(res);
     }
