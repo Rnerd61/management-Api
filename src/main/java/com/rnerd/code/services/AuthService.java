@@ -6,7 +6,7 @@ import com.rnerd.code.models.Globals.Roles;
 import com.rnerd.code.models.Globals.EmployeeModel;
 import com.rnerd.code.payload.request.LoginRequest;
 import com.rnerd.code.payload.response.ResponseMsg;
-import com.rnerd.code.repository.AuthRepo;
+import com.rnerd.code.repository.Global.AuthRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

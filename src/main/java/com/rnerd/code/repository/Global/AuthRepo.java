@@ -1,4 +1,4 @@
-package com.rnerd.code.repository;
+package com.rnerd.code.repository.Global;
 
 import com.rnerd.code.models.Globals.EmployeeModel;
 import org.bson.types.ObjectId;

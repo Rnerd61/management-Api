@@ -10,4 +10,5 @@ import java.util.List;
 public class CustomerReq {
     String customerName;
     String productId;
+    String email;
 }

@@ -1,7 +1,7 @@
 package com.rnerd.code.config.services;
 
 import com.rnerd.code.models.Globals.EmployeeModel;
-import com.rnerd.code.repository.AuthRepo;
+import com.rnerd.code.repository.Global.AuthRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
