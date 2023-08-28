@@ -19,7 +19,6 @@ public class ServiceTeamController {
 
     @PostMapping("/customer")
     public ResponseEntity<Map<String, String>> CustomerDetailController(@Valid @RequestBody CustomerReq customerReq){
-        CustomerDetailService.AddCustomer(customerReq);
         Map<String, String> res = ResponseMsg.Msg("Details Added Successfully");
         return ResponseEntity.ok().body(res);
     }
