@@ -33,10 +33,8 @@ public class EmployeeModel {
     @NotBlank
     private Roles role;
 
-    public EmployeeModel(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
+    @NotBlank
+    private String EmployeeAt;
 
     public EmployeeModel(String username, String password, String email, Roles role) {
         this.username = username;

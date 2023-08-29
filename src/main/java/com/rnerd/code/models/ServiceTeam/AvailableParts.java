@@ -21,9 +21,15 @@ public class AvailableParts {
     @Id
     ObjectId id;
 
-    @NotNull
-    Integer Quantity = 0;
-
     @DBRef
     SpareParts spareParts;
+
+    @NotNull
+    Integer quantity;
+
+
+    public AvailableParts(SpareParts spareParts, Integer quantity) {
+        this.spareParts = spareParts;
+        this.quantity = quantity;
+    }
 }

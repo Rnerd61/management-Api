@@ -26,13 +26,16 @@ public class UserDetailsImpl implements UserDetails {
 
     private String password;
 
+    private String employeeAt;
+
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(ObjectId id, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImpl(ObjectId id, String username, String email, String password, String employeeAt,Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.employeeAt = employeeAt;
         this.authorities = authorities;
     }
 
@@ -44,12 +47,10 @@ public class UserDetailsImpl implements UserDetails {
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
+                user.getEmployeeAt(),
                 authorities);
     }
 
-    public String getEmail(){
-        return this.email;
-    }
 
     @Override
     public boolean isAccountNonExpired() {

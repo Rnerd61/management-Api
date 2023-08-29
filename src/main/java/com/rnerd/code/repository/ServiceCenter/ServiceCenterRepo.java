@@ -16,4 +16,6 @@ public interface ServiceCenterRepo extends MongoRepository<ServiceCenter, Object
     @Query(value = "{'AvailableParts.spareParts.skuid': ?0}", fields = "{'AvailableParts.$': 1}")
     AvailableParts findPartBySkuId(String skuid);
 
+    ServiceCenter findByServiceCenterName(String name);
+
 }
