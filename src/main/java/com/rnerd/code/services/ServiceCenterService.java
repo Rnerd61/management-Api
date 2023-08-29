@@ -16,11 +16,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -38,18 +41,21 @@ public class ServiceCenterService {
         customerRepo.insert(customerModel);
     }
 
-    public void AddSparePart(HttpServletRequest request, HttpServletResponse response, String skuId, Integer quantity) throws Exception{
-        if(serviceCenterRepo.doesSparePartExist(skuId)){
-            UpdateSparePart(skuId, quantity);
+    private void AddSparePart(HttpServletRequest request, HttpServletResponse response, String skuId, Integer quantity) throws Exception{
+
+        ServiceCenter serviceCenter = getSeriveCenter(request, response);
+        AvailableParts ExistingPart = serviceCenter.getAvailableParts().stream().filter(part -> part.getSpareParts().getSkuid().equals(skuId)).findFirst().orElse(null);
+
+        if(ExistingPart != null){
+            ExistingPart.setQuantity(ExistingPart.getQuantity() + quantity);
             return;
         }else{
             SpareParts sparePart = sparePartsRepo.findBySkuid(skuId);
+            if(sparePart == null){
+                throw new Exception("SparePart Not Found");
+            }
+
             AvailableParts newPart = new AvailableParts(sparePart, quantity);
-
-            String username = jwtUtils.getUserNameFromJwtToken(jwtUtils.getJwtFromCookies(request));
-            UserDetailsImpl Employee = userDetailsService.loadUserByUsername(username);
-
-            ServiceCenter serviceCenter = serviceCenterRepo.findByServiceCenterName(Employee.getEmployeeAt());
 
             Query query = new Query(Criteria.where("_id").is(serviceCenter.getId()));
             Update update = new Update().push("AvailableParts", newPart);
@@ -59,12 +65,44 @@ public class ServiceCenterService {
         }
     }
 
-    public void UpdateSparePart(String skuId, Integer quantity){
+    private ServiceCenter getSeriveCenter(HttpServletRequest request, HttpServletResponse response){
+        String username = jwtUtils.getUserNameFromJwtToken(jwtUtils.getJwtFromCookies(request));
+        UserDetailsImpl Employee = userDetailsService.loadUserByUsername(username);
 
-        AvailableParts ExistingPart = serviceCenterRepo.findPartBySkuId(skuId);
-        ExistingPart.setQuantity(ExistingPart.getQuantity() + quantity);
+        return serviceCenterRepo.findByServiceCenterName(Employee.getEmployeeAt());
+    }
 
+
+    // Implement this
+    public void RequestPart(String skuId, Integer quantity){
         return;
     }
+
+    public String UsePartService(HttpServletRequest request, HttpServletResponse response, String skuId, Integer quantity){
+        ServiceCenter serviceCenter = getSeriveCenter(request, response);
+        AvailableParts ExistingPart = serviceCenter.getAvailableParts().stream().filter(part -> part.getSpareParts().getSkuid().equals(skuId)).findFirst().orElse(null);
+
+        if(ExistingPart == null || ExistingPart.getQuantity() < quantity){
+            Integer reqQuantity = 0;
+            if(ExistingPart != null){
+                reqQuantity = quantity - ExistingPart.getQuantity();
+            }
+            RequestPart(skuId, reqQuantity);
+            return "SparePart Shortage Detacted, New Parts Requested";
+
+
+        }else {
+            ExistingPart.setQuantity(ExistingPart.getQuantity() - quantity);
+            return "SpareParts Used Successfully";
+        }
+
+    }
+
+    public List<AvailableParts> AvailablePartService(HttpServletRequest request, HttpServletResponse response){
+        ServiceCenter serviceCenter = getSeriveCenter(request, response);
+        return serviceCenter.getAvailableParts();
+    }
+
+
 
 }
