@@ -24,19 +24,21 @@ import java.util.Map;
 public class ServiceCenter {
 
     @Id
-    ObjectId id;
+    private ObjectId id;
 
     @NotBlank
-    String ServiceCenterName;
+    private String ServiceCenterName;
 
     @NotBlank
-    String Zone;
+    private String Zone;
+
+    @NotBlank
+    private String Address;
 
     @DBRef
-    List<EmployeeModel> employees = new ArrayList<>();
+    private List<EmployeeModel> employees = new ArrayList<>();
 
     @DBRef
-    List<AvailableParts> AvailableParts = new ArrayList<>();
-
+    private List<AvailableParts> AvailableParts = new ArrayList<>();
 
 }

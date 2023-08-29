@@ -1,6 +1,5 @@
 package com.rnerd.code.models.WarehouseTeam;
 
-import com.rnerd.code.models.PlanningTeam.Parts;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

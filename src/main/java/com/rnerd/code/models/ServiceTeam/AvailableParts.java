@@ -19,13 +19,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class AvailableParts {
 
     @Id
-    ObjectId id;
+    private ObjectId id;
 
     @DBRef
-    SpareParts spareParts;
+    private SpareParts spareParts;
 
     @NotNull
-    Integer quantity;
+    private Integer quantity;
 
 
     public AvailableParts(SpareParts spareParts, Integer quantity) {

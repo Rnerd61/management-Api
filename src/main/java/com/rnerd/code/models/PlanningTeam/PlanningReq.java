@@ -2,9 +2,13 @@ package com.rnerd.code.models.PlanningTeam;
 
 
 import com.rnerd.code.models.ServiceTeam.AvailableParts;
+import com.rnerd.code.models.ServiceTeam.ServiceCenter;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -17,23 +21,21 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Document(collection = "planning")
-public class Planning {
+@Document(collection = "planningReq")
+public class PlanningReq {
     @Id
     ObjectId id;
 
     @NotBlank
-    private String taskName;
+    private ServiceCenter from;
 
     @NotBlank @Size(min = 5)
     private String description;
 
-    @NotBlank
-    private String assignedTo;
-
-    @Builder.Default
-    private boolean isCompleted = false;
+    @DateTimeFormat
+    private Date dueDate;
 
     @DBRef
-    private List<PlanningReq> PlanningReqs;
+    private List<AvailableParts> RequiredParts;
+
 }

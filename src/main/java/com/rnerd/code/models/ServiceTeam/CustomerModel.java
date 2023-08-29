@@ -22,19 +22,19 @@ import java.util.List;
 public class CustomerModel {
 
     @Id
-    ObjectId id;
+    private ObjectId id;
 
     @NotBlank
-    String CustomerName;
+    private String CustomerName;
 
     @NotBlank
-    String ProductId;
+    private String ProductId;
 
     @NotBlank @Email
-    String Email;
+    private String Email;
 
     @DBRef
-    List<SpareParts> SparePartsRequired = new ArrayList<>();
+    private List<SpareParts> SparePartsRequired = new ArrayList<>();
 
 
     public CustomerModel(String customerName, String productId, String email) {

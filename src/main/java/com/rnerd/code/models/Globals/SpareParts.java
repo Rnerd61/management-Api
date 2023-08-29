@@ -18,12 +18,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class SpareParts {
 
     @Id
-    ObjectId id;
+    private ObjectId id;
 
     @NotBlank
-    String skuid;
+    private String skuid;
 
     @NotBlank @Size(max = 100)
-    String name;
+    private String name;
 
+    @NotBlank
+    private String description;
+
+    @NotBlank
+    private String compatibility;
 }
