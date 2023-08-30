@@ -1,7 +1,6 @@
 package com.rnerd.code.repository.Planning;
 
 import com.rnerd.code.models.PlanningTeam.PlanningReq;
-import com.rnerd.code.models.ServiceTeam.ServiceCenter;
 import jakarta.validation.constraints.NotBlank;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;

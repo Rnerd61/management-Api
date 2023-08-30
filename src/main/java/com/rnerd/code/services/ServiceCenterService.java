@@ -50,7 +50,6 @@ public class ServiceCenterService {
 
         if(ExistingPart != null){
             ExistingPart.setQuantity(ExistingPart.getQuantity() + quantity);
-            return;
         }else{
             SpareParts sparePart = sparePartsRepo.findBySkuid(skuId);
             if(sparePart == null){
@@ -63,8 +62,8 @@ public class ServiceCenterService {
             Update update = new Update().push("AvailableParts", newPart);
             mongoTemplate.updateFirst(query, update, ServiceCenter.class);
 
-            return;
         }
+        return;
     }
 
     private ServiceCenter getServiceCenter(HttpServletRequest request, HttpServletResponse response){

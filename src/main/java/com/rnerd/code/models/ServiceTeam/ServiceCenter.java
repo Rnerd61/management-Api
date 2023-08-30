@@ -2,7 +2,6 @@ package com.rnerd.code.models.ServiceTeam;
 
 
 import com.rnerd.code.models.Globals.EmployeeModel;
-import com.rnerd.code.models.Globals.SpareParts;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,9 +12,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Document(collection = "ServiceCenter")
 @Data

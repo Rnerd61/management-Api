@@ -1,16 +1,15 @@
 package com.rnerd.code.payload.response;
 
 import com.rnerd.code.config.services.UserDetailsImpl;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ResponseUserDetails {
 
-    public String username;
-    public String email;
-    public String role;
+    public final String username;
+    public final String email;
+    public final String role;
 
     public ResponseUserDetails(UserDetailsImpl user) {
         this.username = user.getUsername();

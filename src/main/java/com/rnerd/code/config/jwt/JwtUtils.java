@@ -4,7 +4,6 @@ import java.security.Key;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import com.auth0.jwt.algorithms.Algorithm;
 import com.rnerd.code.config.services.UserDetailsImpl;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,11 +22,11 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtUtils {
 
-    String jwtSecret = "VGhpc0lzQVNlY3JldEZvck15QXBwbGljYXRpb25Ib3BlVGhpc0lzR29vZA==";
+    final String jwtSecret = "VGhpc0lzQVNlY3JldEZvck15QXBwbGljYXRpb25Ib3BlVGhpc0lzR29vZA==";
 
-    int jwtExpirationMs = 60*60*1000;
+    final int jwtExpirationMs = 60*60*1000;
 
-    String jwtCookie = "access_token";
+    final String jwtCookie = "access_token";
 
     public String getJwtFromCookies(HttpServletRequest request) {
         Cookie cookie = WebUtils.getCookie(request, jwtCookie);

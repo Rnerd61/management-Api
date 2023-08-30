@@ -3,7 +3,6 @@ package com.rnerd.code.repository.Planning;
 import com.rnerd.code.models.PlanningTeam.Planning;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 @Repository
