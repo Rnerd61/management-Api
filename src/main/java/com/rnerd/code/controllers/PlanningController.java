@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/pt")
@@ -16,8 +17,8 @@ public class PlanningController {
     private PlanningService planningService;
 
     @GetMapping
-    public List<Planning> getAllPlanningTasks() {
-        return planningService.getAllPlanningTasks();
+    public List<Planning> getAllPlanningTasks(@RequestBody Map<String, Integer> req) {
+        return planningService.getAllPlanningTasks(req.get("pageNumber"));
     }
 
     @PostMapping

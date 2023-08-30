@@ -15,6 +15,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class PlanningReq {
     ObjectId id;
 
     @NotBlank
-    private ServiceCenter from;
+    private String from;
 
     @NotBlank @Size(min = 5)
     private String description;
@@ -36,6 +37,12 @@ public class PlanningReq {
     private Date dueDate;
 
     @DBRef
-    private List<AvailableParts> RequiredParts;
+    private List<AvailableParts> RequiredParts = new ArrayList<>();
 
+    public PlanningReq(String serviceCenter, String description, Date dueDate, AvailableParts requestedParts) {
+        this.from = serviceCenter;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.RequiredParts.add(requestedParts);
+    }
 }
