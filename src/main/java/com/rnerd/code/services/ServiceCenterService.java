@@ -4,7 +4,6 @@ import com.rnerd.code.config.jwt.JwtUtils;
 import com.rnerd.code.config.services.UserDetailsImpl;
 import com.rnerd.code.config.services.UserDetailsServicesImpl;
 import com.rnerd.code.models.Globals.SpareParts;
-import com.rnerd.code.models.PlanningTeam.Planning;
 import com.rnerd.code.models.PlanningTeam.PlanningReq;
 import com.rnerd.code.models.ServiceTeam.AvailableParts;
 import com.rnerd.code.models.ServiceTeam.CustomerModel;
@@ -18,7 +17,6 @@ import com.rnerd.code.repository.ServiceCenter.ServiceCenterRepo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -38,7 +36,6 @@ public class ServiceCenterService {
     private final UserDetailsServicesImpl userDetailsService;
     private final MongoTemplate mongoTemplate;
     private final PlanningReqRepo planningReqRepo;
-
 
 
     public void AddCustomer(CustomerReq customerReq) throws Exception{
@@ -79,7 +76,7 @@ public class ServiceCenterService {
 
 
     // Implement this
-    public void RequestPart(HttpServletRequest request, HttpServletResponse response, RequestPartFormat req){
+    public void RequestPart(HttpServletRequest request, HttpServletResponse response, RequestPartFormat req) throws Exception{
 
 
         SpareParts requiredPart = sparePartsRepo.findBySkuid(req.getSkuId());
@@ -94,8 +91,7 @@ public class ServiceCenterService {
             RequestedParts.getRequiredParts().add(partAndQuantity);
         }
 
-        PlanningReqRepo.save(RequestedParts);
-        return;
+        planningReqRepo.save(RequestedParts);
     }
 
     public String UsePartService(HttpServletRequest request, HttpServletResponse response, String skuId, Integer quantity){
@@ -103,7 +99,7 @@ public class ServiceCenterService {
         AvailableParts ExistingPart = serviceCenter.getAvailableParts().stream().filter(part -> part.getSpareParts().getSkuid().equals(skuId)).findFirst().orElse(null);
 
         if(ExistingPart == null || ExistingPart.getQuantity() < quantity){
-            Integer reqQuantity = 0;
+            int reqQuantity = 0;
             if(ExistingPart != null){
                 reqQuantity = quantity - ExistingPart.getQuantity();
             }

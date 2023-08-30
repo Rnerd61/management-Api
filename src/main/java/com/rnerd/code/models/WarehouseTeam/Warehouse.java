@@ -1,5 +1,6 @@
 package com.rnerd.code.models.WarehouseTeam;
 
+import com.rnerd.code.models.ServiceTeam.AvailableParts;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,10 +19,10 @@ public class Warehouse {
     private ObjectId id;
     private String name;
     private String location;
-    private List<Parts> parts;
+    private List<AvailableParts> parts;
     // contracts/orders implementation
 
-    public Warehouse(String name, String location, List<Parts> parts) {
+    public Warehouse(String name, String location, List<AvailableParts> parts) {
         this.name = name;
         this.location = location;
         this.parts = parts;

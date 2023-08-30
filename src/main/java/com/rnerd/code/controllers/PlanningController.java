@@ -1,24 +1,30 @@
 package com.rnerd.code.controllers;
 
 import com.rnerd.code.models.PlanningTeam.Planning;
+import com.rnerd.code.models.PlanningTeam.PlanningReq;
 import com.rnerd.code.services.PlanningService;
+import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/pt")
 public class PlanningController {
 
-    @Autowired
-    private PlanningService planningService;
+    private final PlanningService planningService;
 
     @GetMapping
     public List<Planning> getAllPlanningTasks(@RequestBody Map<String, Integer> req) {
         return planningService.getAllPlanningTasks(req.get("pageNumber"));
+    }
+
+    @GetMapping("/reqs")
+    public List<PlanningReq> getAllPlanningRequests(@RequestBody Map<String, Integer> req){
+        return planningService.getAllPlanningRequests(req.get("pageNumber"));
     }
 
     @PostMapping

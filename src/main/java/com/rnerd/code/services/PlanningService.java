@@ -7,7 +7,6 @@ import com.rnerd.code.repository.Planning.PlanningRepo;
 import com.rnerd.code.repository.Planning.PlanningReqRepo;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -19,7 +18,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PlanningService {
 
-    private PlanningRepo planningRepo;
+    private final PlanningRepo planningRepo;
+    private final PlanningReqRepo planningReqRepo;
 
     public List<Planning> getAllPlanningTasks(Integer pageNumber) {
         int page = pageNumber;
@@ -33,9 +33,22 @@ public class PlanningService {
         return resultPage.getContent();
     }
 
+    public List<PlanningReq> getAllPlanningRequests(Integer pageNumber){
+        int page = pageNumber;
+        int pageSize = 10;
+        Sort sort = Sort.by(Sort.Direction.DESC, "dueDate");
+
+
+        PageRequest pageRequest = PageRequest.of(page, pageSize, sort);
+        Page<PlanningReq> resultPage = planningReqRepo.findAll(pageRequest);
+
+        return resultPage.getContent();
+    }
+
     public Planning createPlanningTask(Planning planning) {
         return planningRepo.save(planning);
     }
+
 
     public Planning getPlanningTaskById(ObjectId id) {
         return planningRepo.findById(id).orElse(null);

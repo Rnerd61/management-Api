@@ -2,6 +2,7 @@ package com.rnerd.code.controllers;
 
 import com.rnerd.code.models.ServiceTeam.AvailableParts;
 import com.rnerd.code.payload.request.CustomerReq;
+import com.rnerd.code.payload.request.RequestPartFormat;
 import com.rnerd.code.payload.response.ResponseMsg;
 import com.rnerd.code.services.ServiceCenterService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,6 +43,12 @@ public class ServiceCenterController {
         String res = serviceCenterService.UsePartService(request, response, skuId, quantity);
 
         return ResponseEntity.ok().body(ResponseMsg.Msg(res));
+    }
+
+    @PostMapping("/ReqPart")
+    public ResponseEntity<Map<String, String>> ReqPartController(HttpServletRequest request, HttpServletResponse response, @RequestBody @Valid RequestPartFormat planningReq) throws Exception{
+        serviceCenterService.RequestPart(request, response, planningReq);
+        return ResponseEntity.ok().body(ResponseMsg.Msg("Part Requested!"));
     }
 
 }
