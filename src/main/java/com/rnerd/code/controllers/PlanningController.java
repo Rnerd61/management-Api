@@ -2,9 +2,13 @@ package com.rnerd.code.controllers;
 
 import com.rnerd.code.models.PlanningTeam.Planning;
 import com.rnerd.code.models.PlanningTeam.PlanningReq;
+import com.rnerd.code.models.WarehouseTeam.WarehouseReq;
+import com.rnerd.code.payload.response.ResponseMsg;
 import com.rnerd.code.services.PlanningService;
+import com.rnerd.code.services.WarehouseService;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +20,7 @@ import java.util.Map;
 public class PlanningController {
 
     private final PlanningService planningService;
+    private final WarehouseService warehouseService;
 
     @GetMapping
     public List<Planning> getAllPlanningTasks(@RequestBody Map<String, Integer> req) {
@@ -26,6 +31,13 @@ public class PlanningController {
     public List<PlanningReq> getAllPlanningRequests(@RequestBody Map<String, Integer> req){
         return planningService.getAllPlanningRequests(req.get("pageNumber"));
     }
+
+    @PostMapping("/forward")
+    public ResponseEntity<Map<String, String>> forwardReqController(@RequestBody WarehouseReq req){
+        return ResponseEntity.ok().body(ResponseMsg.Msg(warehouseService.GetReqService(req)));
+    }
+
+
 
     @PostMapping
     public Planning createPlanningTask(@RequestBody Planning planning) {

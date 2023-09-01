@@ -1,6 +1,6 @@
 package com.rnerd.code.controllers;
 
-import com.rnerd.code.models.ServiceTeam.AvailableParts;
+import com.rnerd.code.models.Globals.RequiredPart;
 import com.rnerd.code.payload.request.CustomerReq;
 import com.rnerd.code.payload.request.RequestPartFormat;
 import com.rnerd.code.payload.response.ResponseMsg;
@@ -32,8 +32,8 @@ public class ServiceCenterController {
     }
 
     @GetMapping("/AvailableParts")
-    public ResponseEntity<List<AvailableParts>> AvailablePartsController(HttpServletRequest request, HttpServletResponse response){
-        List<AvailableParts> parts = serviceCenterService.AvailablePartService(request, response);
+    public ResponseEntity<List<RequiredPart>> AvailablePartsController(HttpServletRequest request, HttpServletResponse response){
+        List<RequiredPart> parts = serviceCenterService.AvailablePartService(request, response);
 
         return ResponseEntity.ok().body(parts);
     }
@@ -50,5 +50,6 @@ public class ServiceCenterController {
         serviceCenterService.RequestPart(request, response, planningReq);
         return ResponseEntity.ok().body(ResponseMsg.Msg("Part Requested!"));
     }
+
 
 }

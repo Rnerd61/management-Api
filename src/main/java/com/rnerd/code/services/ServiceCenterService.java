@@ -5,11 +5,12 @@ import com.rnerd.code.config.services.UserDetailsImpl;
 import com.rnerd.code.config.services.UserDetailsServicesImpl;
 import com.rnerd.code.models.Globals.SpareParts;
 import com.rnerd.code.models.PlanningTeam.PlanningReq;
-import com.rnerd.code.models.ServiceTeam.AvailableParts;
+import com.rnerd.code.models.Globals.RequiredPart;
 import com.rnerd.code.models.ServiceTeam.CustomerModel;
 import com.rnerd.code.models.ServiceTeam.ServiceCenter;
 import com.rnerd.code.payload.request.CustomerReq;
 import com.rnerd.code.payload.request.RequestPartFormat;
+import com.rnerd.code.repository.Global.ProductsRepo;
 import com.rnerd.code.repository.Global.SparePartsRepo;
 import com.rnerd.code.repository.Planning.PlanningReqRepo;
 import com.rnerd.code.repository.ServiceCenter.CustomerRepo;
@@ -36,6 +37,7 @@ public class ServiceCenterService {
     private final UserDetailsServicesImpl userDetailsService;
     private final MongoTemplate mongoTemplate;
     private final PlanningReqRepo planningReqRepo;
+    private final ProductsRepo productsRepo;
 
 
     public void AddCustomer(CustomerReq customerReq) throws Exception{
@@ -46,7 +48,7 @@ public class ServiceCenterService {
     private void AddSparePart(HttpServletRequest request, HttpServletResponse response, String skuId, Integer quantity) throws Exception{
 
         ServiceCenter serviceCenter = getServiceCenter(request, response);
-        AvailableParts ExistingPart = serviceCenter.getAvailableParts().stream().filter(part -> part.getSpareParts().getSkuid().equals(skuId)).findFirst().orElse(null);
+        RequiredPart ExistingPart = serviceCenter.getRequiredPart().stream().filter(part -> part.getSpareParts().getSkuid().equals(skuId)).findFirst().orElse(null);
 
         if(ExistingPart != null){
             ExistingPart.setQuantity(ExistingPart.getQuantity() + quantity);
@@ -56,7 +58,7 @@ public class ServiceCenterService {
                 throw new Exception("SparePart Not Found");
             }
 
-            AvailableParts newPart = new AvailableParts(sparePart, quantity);
+            RequiredPart newPart = new RequiredPart(sparePart, quantity);
 
             Query query = new Query(Criteria.where("_id").is(serviceCenter.getId()));
             Update update = new Update().push("AvailableParts", newPart);
@@ -79,13 +81,13 @@ public class ServiceCenterService {
 
 
         SpareParts requiredPart = sparePartsRepo.findBySkuid(req.getSkuId());
-        AvailableParts partAndQuantity = new AvailableParts(requiredPart, req.getQuantity());
+        RequiredPart partAndQuantity = new RequiredPart(requiredPart, req.getQuantity());
         String serviceCenter = getServiceCenter(request, response).getServiceCenterName();
 
         PlanningReq RequestedParts = planningReqRepo.findByFrom(serviceCenter);
 
         if(requiredPart==null){
-            RequestedParts = new PlanningReq(serviceCenter, req.getDescription(), req.getDueDate(), partAndQuantity);
+            RequestedParts = new PlanningReq(serviceCenter, req.getDescription(), partAndQuantity);
         }else {
             RequestedParts.getRequiredParts().add(partAndQuantity);
         }
@@ -95,7 +97,7 @@ public class ServiceCenterService {
 
     public String UsePartService(HttpServletRequest request, HttpServletResponse response, String skuId, Integer quantity){
         ServiceCenter serviceCenter = getServiceCenter(request, response);
-        AvailableParts ExistingPart = serviceCenter.getAvailableParts().stream().filter(part -> part.getSpareParts().getSkuid().equals(skuId)).findFirst().orElse(null);
+        RequiredPart ExistingPart = serviceCenter.getRequiredPart().stream().filter(part -> part.getSpareParts().getSkuid().equals(skuId)).findFirst().orElse(null);
 
         if(ExistingPart == null || ExistingPart.getQuantity() < quantity){
             int reqQuantity = 0;
@@ -113,9 +115,9 @@ public class ServiceCenterService {
 
     }
 
-    public List<AvailableParts> AvailablePartService(HttpServletRequest request, HttpServletResponse response){
+    public List<RequiredPart> AvailablePartService(HttpServletRequest request, HttpServletResponse response){
         ServiceCenter serviceCenter = getServiceCenter(request, response);
-        return serviceCenter.getAvailableParts();
+        return serviceCenter.getRequiredPart();
     }
 
 

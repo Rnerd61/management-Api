@@ -2,6 +2,7 @@ package com.rnerd.code.models.ServiceTeam;
 
 
 import com.rnerd.code.models.Globals.EmployeeModel;
+import com.rnerd.code.models.Globals.RequiredPart;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,6 +37,6 @@ public class ServiceCenter {
     private List<EmployeeModel> employees = new ArrayList<>();
 
     @DBRef
-    private List<AvailableParts> AvailableParts = new ArrayList<>();
+    private List<RequiredPart> RequiredPart = new ArrayList<>();
 
 }

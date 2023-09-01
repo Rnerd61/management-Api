@@ -21,11 +21,6 @@ public class CodeApplication {
         return "Hello World";
     }
 
-    @GetMapping("/home")
-    public String homeRoot(){
-        return "Hello World";
-    }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {

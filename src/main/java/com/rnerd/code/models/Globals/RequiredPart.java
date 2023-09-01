@@ -1,11 +1,8 @@
-package com.rnerd.code.models.ServiceTeam;
+package com.rnerd.code.models.Globals;
 
-import com.rnerd.code.models.Globals.SpareParts;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -16,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AvailableParts {
+public class RequiredPart {
 
     @Id
     private ObjectId id;
@@ -27,9 +24,18 @@ public class AvailableParts {
     @NotNull
     private Integer quantity;
 
+    @NotBlank @Builder.Default
+    private Status CurrentStatus;
 
-    public AvailableParts(SpareParts spareParts, Integer quantity) {
+
+
+
+
+    public RequiredPart(SpareParts spareParts, Integer quantity) {
         this.spareParts = spareParts;
         this.quantity = quantity;
+        this.CurrentStatus = Status.____;
     }
+
+
 }

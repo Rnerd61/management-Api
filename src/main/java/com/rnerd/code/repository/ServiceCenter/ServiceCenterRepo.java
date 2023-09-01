@@ -1,6 +1,6 @@
 package com.rnerd.code.repository.ServiceCenter;
 
-import com.rnerd.code.models.ServiceTeam.AvailableParts;
+import com.rnerd.code.models.Globals.RequiredPart;
 import com.rnerd.code.models.ServiceTeam.ServiceCenter;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -14,7 +14,7 @@ public interface ServiceCenterRepo extends MongoRepository<ServiceCenter, Object
     boolean doesSparePartExist(String skuid);
 
     @Query(value = "{'AvailableParts.spareParts.skuid': ?0}", fields = "{'AvailableParts.$': 1}")
-    AvailableParts findPartBySkuId(String skuid);
+    RequiredPart findPartBySkuId(String skuid);
 
     ServiceCenter findByServiceCenterName(String name);
 

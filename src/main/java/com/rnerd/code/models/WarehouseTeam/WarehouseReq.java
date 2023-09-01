@@ -1,5 +1,4 @@
-package com.rnerd.code.models.PlanningTeam;
-
+package com.rnerd.code.models.WarehouseTeam;
 
 import com.rnerd.code.models.Globals.RequiredPart;
 import com.rnerd.code.models.Globals.Status;
@@ -7,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -15,19 +14,19 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
-@Document(collection = "planningReq")
-public class PlanningReq {
+@Document(collection = "WareHouseReq")
+public class WarehouseReq {
     @Id
     ObjectId id;
 
     @NotBlank
     private String from;
+
+    @NotBlank
+    private Warehouse warehouse;
 
     @NotBlank @Size(min = 5)
     private String description;
@@ -36,14 +35,18 @@ public class PlanningReq {
     private LocalDateTime CreatedAt;
 
     @DBRef
-    private List<RequiredPart> RequiredParts = new ArrayList<>();
+    private RequiredPart requiredPart;
 
+    @NotBlank
+    private String skuId;
 
-    public PlanningReq(String serviceCenter, String description, RequiredPart requestedParts) {
-        this.from = serviceCenter;
+    public WarehouseReq(ObjectId id, String from, Warehouse warehouse, String description, LocalDateTime createdAt, RequiredPart requiredPart) {
+        this.id = id;
+        this.from = from;
+        this.warehouse = warehouse;
         this.description = description;
-        this.CreatedAt = java.time.LocalDateTime.now();
-        this.RequiredParts.add(requestedParts);
-        this.RequiredParts.forEach(requiredPart -> requiredPart.setCurrentStatus(Status.INPROGRESS));
+        CreatedAt = createdAt;
+        this.requiredPart = requiredPart;
+        this.skuId = requiredPart.getSpareParts().getSkuid();
     }
 }

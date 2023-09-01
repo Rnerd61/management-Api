@@ -1,43 +1,33 @@
 package com.rnerd.code.controllers;
 
-import com.rnerd.code.models.WarehouseTeam.Warehouse;
+import com.rnerd.code.models.WarehouseTeam.WarehouseReq;
+import com.rnerd.code.payload.response.ResponseMsg;
+import com.rnerd.code.repository.Warehouse.WarehouseRepo;
 import com.rnerd.code.services.WarehouseService;
-import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/wt")
 public class WarehouseController {
 
-    @Autowired
-    private WarehouseService warehouseService;
+    private final WarehouseService warehouseService;
+    private final WarehouseRepo warehouseRepo;
 
-    @GetMapping
-    public List<Warehouse> getAllWarehouses() {
-        return warehouseService.getAllWarehouses();
+
+    @GetMapping("/AvailabilityCheck")
+    public ResponseEntity<Map<String, Integer>> CheckAvailabity(@RequestBody String skuId, char zone){
+        Map<String, Integer> res = new HashMap<>();
+        res.put(skuId, warehouseService.CheckAvailService(skuId, zone));
+        return ResponseEntity.ok().body(res);
     }
-
-    @GetMapping("/{id}")
-    public Optional<Warehouse> getWarehouseById(@PathVariable String id) {
-        return warehouseService.getWarehouseById(new ObjectId(id));
-    }
-
-    @PostMapping
-    public Warehouse createWarehouse(@RequestBody Warehouse warehouse) {
-        return warehouseService.createWarehouse(warehouse);
-    }
-
-    @PutMapping("/{id}")
-    public Warehouse updateWarehouse(@PathVariable String id, @RequestBody Warehouse updatedWarehouse) {
-        return warehouseService.updateWarehouse(new ObjectId(id), updatedWarehouse);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteWarehouse(@PathVariable String id) {
-        warehouseService.deleteWarehouse(new ObjectId(id));
+    @GetMapping("/dispatch/:skuid")
+    public ResponseEntity<Map<String, String>> Dispatch(@RequestParam String skuid){
+        return ResponseEntity.ok().body(ResponseMsg.Msg(warehouseService.dispatchService(skuid)));
     }
 }
