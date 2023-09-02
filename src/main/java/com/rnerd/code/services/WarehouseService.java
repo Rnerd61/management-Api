@@ -37,7 +37,7 @@ public class WarehouseService {
     }
 
     public String dispatchService(String skuId) {
-        WarehouseReq warehouseReq =  warehouseReqRepo.findByskuid(skuId);
+        WarehouseReq warehouseReq =  warehouseReqRepo.findBySkuId(skuId);
         warehouseReq.getRequiredPart().setCurrentStatus(Status.DISPACTHED);
 
         warehouseReqRepo.delete(warehouseReq);

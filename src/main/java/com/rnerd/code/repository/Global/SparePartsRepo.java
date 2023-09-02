@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SparePartsRepo extends MongoRepository<SpareParts, ObjectId> {
     SpareParts findBySkuid(String skuid);
+    long countBySkuidStartingWith(String baseSku);
+
 }

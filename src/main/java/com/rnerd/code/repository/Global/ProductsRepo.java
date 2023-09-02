@@ -6,4 +6,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface ProductsRepo extends MongoRepository<Products, ObjectId> {
     Products findBySkuid(String skuid);
+
+    long countBySkuidStartingWith(String baseSku);
 }

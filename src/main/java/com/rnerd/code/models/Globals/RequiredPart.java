@@ -24,7 +24,7 @@ public class RequiredPart {
     @NotNull
     private Integer quantity;
 
-    @NotBlank @Builder.Default
+    @NotBlank
     private Status CurrentStatus;
 
 

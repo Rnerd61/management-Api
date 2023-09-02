@@ -10,5 +10,5 @@ import java.io.ObjectInput;
 
 @Repository
 public interface WarehouseReqRepo extends MongoRepository<WarehouseReq, ObjectId> {
-    WarehouseReq findByskuid(String skuid);
+    WarehouseReq findBySkuId(String skuid);
 }
