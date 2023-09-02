@@ -51,31 +51,31 @@ public class GlobalController {
     }
 
 
-//    @PostMapping("/saveProduct")
-//    public ResponseEntity<Products> saveProduct(@RequestBody ProductReq req){
-//        String skuId = globalService.generateSku(req);
-//        Products newProduct = new Products(skuId, req);
-//        productsRepo.save(newProduct);
-//
-//        return ResponseEntity.ok().body(productsRepo.findBySkuid(skuId));
-//    }
-//
-//    @PostMapping("/savePart")
-//    public ResponseEntity<SpareParts> savePart(@RequestBody @Valid SparePartReq req){
-//        String skuId = globalService.generateSku(req);
-//        SpareParts newPart = new SpareParts(skuId, req);
-//        sparePartsRepo.save(newPart);
-//
-//        return ResponseEntity.ok().body(sparePartsRepo.findBySkuid(skuId));
-//    }
-//
-//    @PostMapping("/addPartToModel")
-//    public ResponseEntity<Products> addPartToModel(@RequestBody @Valid addPartReq req){
-//        Products product = productsRepo.findBySkuid(req.getProductSkuId());
-//        product.getSpareParts().add(sparePartsRepo.findBySkuid(req.getPartSkuId()));
-//        productsRepo.save(product);
-//
-//
-//        return ResponseEntity.ok().body(productsRepo.findBySkuid(req.getProductSkuId()));
-//    }
+    @PostMapping("/saveProduct")
+    public ResponseEntity<Products> saveProduct(@RequestBody ProductReq req){
+        String skuId = globalService.generateSku(req);
+        Products newProduct = new Products(skuId, req);
+        productsRepo.save(newProduct);
+
+        return ResponseEntity.ok().body(productsRepo.findBySkuid(skuId));
+    }
+
+    @PostMapping("/savePart")
+    public ResponseEntity<SpareParts> savePart(@RequestBody @Valid SparePartReq req){
+        String skuId = globalService.generateSku(req);
+        SpareParts newPart = new SpareParts(skuId, req);
+        sparePartsRepo.save(newPart);
+
+        return ResponseEntity.ok().body(sparePartsRepo.findBySkuid(skuId));
+    }
+
+    @PostMapping("/addPartToModel")
+    public ResponseEntity<Products> addPartToModel(@RequestBody @Valid addPartReq req){
+        Products product = productsRepo.findBySkuid(req.getProductSkuId());
+        product.getSpareParts().add(sparePartsRepo.findBySkuid(req.getPartSkuId()));
+        productsRepo.save(product);
+
+
+        return ResponseEntity.ok().body(productsRepo.findBySkuid(req.getProductSkuId()));
+    }
 }
