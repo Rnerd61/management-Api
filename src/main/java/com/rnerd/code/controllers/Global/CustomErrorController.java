@@ -1,4 +1,4 @@
-package com.rnerd.code.controllers;
+package com.rnerd.code.controllers.Global;
 
 import com.rnerd.code.payload.response.ResponseMsg;
 import org.springframework.boot.web.servlet.error.ErrorController;

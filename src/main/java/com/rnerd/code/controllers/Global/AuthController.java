@@ -1,4 +1,4 @@
-package com.rnerd.code.controllers;
+package com.rnerd.code.controllers.Global;
 
 import com.rnerd.code.config.jwt.JwtUtils;
 import com.rnerd.code.config.services.UserDetailsImpl;

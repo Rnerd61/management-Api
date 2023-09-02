@@ -20,11 +20,6 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductReq {
 
-    @Id
-    private ObjectId id;
-
-    @NotBlank
-    private String skuid;
 
     @NotBlank @Size(max = 100)
     private String name;

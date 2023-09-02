@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,10 +24,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SpareParts {
 
-    @Id
-    private ObjectId id;
+//    @Id
+//    private ObjectId id;
 
-    @Indexed(unique = true) @NotBlank
+    @Id @Indexed(unique = true) @NotBlank
     private String skuid;
 
     @NotBlank @Size(max = 100)
@@ -46,16 +47,13 @@ public class SpareParts {
     @NotBlank @DateTimeFormat
     private Date releaseDate;
 
-    @NotBlank @DBRef
-    private List<Products> products;
-
 
     public SpareParts(String skuid, SparePartReq req) {
         this.skuid = skuid;
         this.name = req.getName();
         this.Manufacturer = req.getManufacturer();
         this.PartType = req.getPartType();
-        Model = req.getModel();
+        this.Model = req.getModel();
         this.description = req.getDescription();
         this.releaseDate = new Date();
     }

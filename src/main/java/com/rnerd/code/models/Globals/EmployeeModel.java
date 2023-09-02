@@ -17,9 +17,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmployeeModel {
-    @Id
-    private ObjectId id;
+//    @Id
+//    private ObjectId id;
 
+    @Id
     @Indexed(unique = true)
     @NotBlank @Size(min = 3, max = 15)
     private String username;

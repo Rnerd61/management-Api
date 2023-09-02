@@ -18,8 +18,6 @@ import java.util.Collections;
 @EqualsAndHashCode
 public class UserDetailsImpl implements UserDetails {
 
-    private ObjectId id;
-
     private String username;
 
     private String email;
@@ -30,8 +28,7 @@ public class UserDetailsImpl implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(ObjectId id, String username, String email, String password, String employeeAt,Collection<? extends GrantedAuthority> authorities) {
-        this.id = id;
+    public UserDetailsImpl( String username, String email, String password, String employeeAt,Collection<? extends GrantedAuthority> authorities) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -43,7 +40,6 @@ public class UserDetailsImpl implements UserDetails {
         Collection<? extends GrantedAuthority> authorities =  Collections.singletonList(new SimpleGrantedAuthority(user.getRole().name()));
 
         return new UserDetailsImpl(
-                user.getId(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
