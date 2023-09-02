@@ -51,5 +51,4 @@ public class ServiceCenterController {
         return ResponseEntity.ok().body(ResponseMsg.Msg("Part Requested!"));
     }
 
-
 }

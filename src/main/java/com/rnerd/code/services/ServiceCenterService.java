@@ -45,9 +45,9 @@ public class ServiceCenterService {
         customerRepo.insert(customerModel);
     }
 
-    private void AddSparePart(HttpServletRequest request, HttpServletResponse response, String skuId, Integer quantity) throws Exception{
+    public void AddSparePart(String serviceCentreName, String skuId, Integer quantity) throws Exception{
 
-        ServiceCenter serviceCenter = getServiceCenter(request, response);
+        ServiceCenter serviceCenter = serviceCenterRepo.findByServiceCenterName(serviceCentreName);
         RequiredPart ExistingPart = serviceCenter.getRequiredPart().stream().filter(part -> part.getSpareParts().getSkuid().equals(skuId)).findFirst().orElse(null);
 
         if(ExistingPart != null){
@@ -61,7 +61,7 @@ public class ServiceCenterService {
             RequiredPart newPart = new RequiredPart(sparePart, quantity);
 
             Query query = new Query(Criteria.where("_id").is(serviceCenter.getId()));
-            Update update = new Update().push("AvailableParts", newPart);
+            Update update = new Update().push("RequiredPart", newPart);
             mongoTemplate.updateFirst(query, update, ServiceCenter.class);
 
         }

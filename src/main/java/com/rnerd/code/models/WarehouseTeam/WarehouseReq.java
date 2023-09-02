@@ -32,7 +32,7 @@ public class WarehouseReq {
     private String description;
 
     @DateTimeFormat
-    private LocalDateTime CreatedAt;
+    private DateTimeFormat CreatedAt;
 
     @DBRef
     private RequiredPart requiredPart;
@@ -40,12 +40,12 @@ public class WarehouseReq {
     @NotBlank
     private String skuId;
 
-    public WarehouseReq(ObjectId id, String from, Warehouse warehouse, String description, LocalDateTime createdAt, RequiredPart requiredPart) {
+    public WarehouseReq(ObjectId id, String from, Warehouse warehouse, String description, DateTimeFormat createdAt, RequiredPart requiredPart) {
         this.id = id;
         this.from = from;
         this.warehouse = warehouse;
         this.description = description;
-        CreatedAt = createdAt;
+        this.CreatedAt = createdAt;
         this.requiredPart = requiredPart;
         this.skuId = requiredPart.getSpareParts().getSkuid();
     }

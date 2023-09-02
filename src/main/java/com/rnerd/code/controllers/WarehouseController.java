@@ -1,8 +1,11 @@
 package com.rnerd.code.controllers;
 
+import com.rnerd.code.models.Globals.Status;
 import com.rnerd.code.models.WarehouseTeam.WarehouseReq;
 import com.rnerd.code.payload.response.ResponseMsg;
 import com.rnerd.code.repository.Warehouse.WarehouseRepo;
+import com.rnerd.code.repository.Warehouse.WarehouseReqRepo;
+import com.rnerd.code.services.ServiceCenterService;
 import com.rnerd.code.services.WarehouseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +21,8 @@ public class WarehouseController {
 
     private final WarehouseService warehouseService;
     private final WarehouseRepo warehouseRepo;
+    private final WarehouseReqRepo warehouseReqRepo;
+    private final ServiceCenterService serviceCenterService;
 
 
     @GetMapping("/AvailabilityCheck")
@@ -29,5 +34,15 @@ public class WarehouseController {
     @GetMapping("/dispatch/:skuid")
     public ResponseEntity<Map<String, String>> Dispatch(@RequestParam String skuid){
         return ResponseEntity.ok().body(ResponseMsg.Msg(warehouseService.dispatchService(skuid)));
+    }
+
+    @GetMapping("/delivered/:skuid")
+    public ResponseEntity<Map<String, String>> delivered(@RequestParam String skuid) throws Exception{
+        WarehouseReq req = warehouseReqRepo.findBySkuId(skuid);
+        serviceCenterService.AddSparePart(req.getFrom(), req.getSkuId(), req.getRequiredPart().getQuantity());
+        req.getRequiredPart().setCurrentStatus(Status.COMPLETED);
+        warehouseReqRepo.delete(req);
+
+        return ResponseEntity.ok().body(ResponseMsg.Msg("Item Delivered Successfully"));
     }
 }
