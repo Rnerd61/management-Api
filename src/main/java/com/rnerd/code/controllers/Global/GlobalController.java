@@ -1,4 +1,4 @@
-package com.rnerd.code.controllers;
+package com.rnerd.code.controllers.Global;
 
 import com.rnerd.code.models.Globals.Products;
 import com.rnerd.code.models.Globals.SpareParts;
@@ -30,7 +30,7 @@ public class GlobalController {
 
     @GetMapping("/getProduct")
     public ResponseEntity<List<Products>> getProducts(){
-        return ResponseEntity.ok().body(globalService.getAllProductsService(10));
+        return ResponseEntity.ok().body(globalService.getAllProductsService(0));
     }
 
 
@@ -40,8 +40,8 @@ public class GlobalController {
     }
 
     @GetMapping("/getParts")
-    public ResponseEntity<List<Products>> getParts(){
-        return ResponseEntity.ok().body(globalService.getAllProductsService(10));
+    public ResponseEntity<List<SpareParts>> getParts(){
+        return ResponseEntity.ok().body(globalService.getAllPartsService(0));
     }
 
 
@@ -75,9 +75,7 @@ public class GlobalController {
         product.getSpareParts().add(sparePartsRepo.findBySkuid(req.getPartSkuId()));
         productsRepo.save(product);
 
-        SpareParts sparePart = sparePartsRepo.findBySkuid(req.getPartSkuId());
-        sparePart.getProducts().add(productsRepo.findBySkuid(req.getPartSkuId()));
-        sparePartsRepo.save(sparePart);
-        return ResponseEntity.ok().body(productsRepo.findBySkuid(req.getPartSkuId()));
+
+        return ResponseEntity.ok().body(productsRepo.findBySkuid(req.getProductSkuId()));
     }
 }
