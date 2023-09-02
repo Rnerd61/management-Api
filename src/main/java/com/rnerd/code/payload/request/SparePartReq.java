@@ -16,7 +16,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class SparePartReq {
 
     @NotBlank @Size(max = 100)
@@ -31,5 +31,6 @@ public class SparePartReq {
     @NotBlank
     private String PartType;
 
-    @NotBlank String Model;
+    @NotBlank
+    private String Model;
 }

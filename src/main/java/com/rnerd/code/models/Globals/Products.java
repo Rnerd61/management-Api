@@ -25,10 +25,10 @@ import java.util.List;
 @AllArgsConstructor
 public class Products  {
 
-    @Id
-    private ObjectId id;
+//    @Id
+//    private ObjectId id;
 
-    @NotBlank
+    @Id
     private String skuid;
 
     @NotBlank @Size(max = 100)
