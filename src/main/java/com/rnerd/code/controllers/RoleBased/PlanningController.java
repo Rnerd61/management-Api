@@ -1,11 +1,13 @@
-package com.rnerd.code.controllers;
+package com.rnerd.code.controllers.RoleBased;
 
 import com.rnerd.code.models.PlanningTeam.Planning;
 import com.rnerd.code.models.PlanningTeam.PlanningReq;
 import com.rnerd.code.models.WarehouseTeam.WarehouseReq;
+import com.rnerd.code.payload.request.PT.GetAllPlanningTasksReq;
 import com.rnerd.code.payload.response.ResponseMsg;
 import com.rnerd.code.services.PlanningService;
 import com.rnerd.code.services.WarehouseService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
@@ -16,28 +18,27 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://172.31.52.191:3000", maxAge = 3000, allowCredentials = "true")
 @RequestMapping("/api/v1/pt")
 public class PlanningController {
 
     private final PlanningService planningService;
-    private final WarehouseService warehouseService;
 
     @GetMapping
-    public List<Planning> getAllPlanningTasks(@RequestBody Map<String, Integer> req) {
-        return planningService.getAllPlanningTasks(req.get("pageNumber"));
+    public List<Planning> getAllPlanningTasks(@RequestBody @Valid GetAllPlanningTasksReq req) {
+        return planningService.getAllPlanningTasks(req.getPageNumber());
     }
 
-    @GetMapping("/reqs")
-    public List<PlanningReq> getAllPlanningRequests(@RequestBody Map<String, Integer> req){
-        return planningService.getAllPlanningRequests(req.get("pageNumber"));
+    @GetMapping("/getRequests")
+    public List<PlanningReq> getAllPlanningRequests(@RequestBody GetAllPlanningTasksReq req){
+        return planningService.getAllPlanningRequests(req.getPageNumber());
     }
 
     @PostMapping("/forward")
     public ResponseEntity<Map<String, String>> forwardReqController(@RequestBody WarehouseReq req){
-        return ResponseEntity.ok().body(ResponseMsg.Msg(warehouseService.GetReqService(req)));
+        String res = planningService.ForwardReq(req);
+        return ResponseEntity.ok().body(ResponseMsg.Msg(res));
     }
-
-
 
     @PostMapping
     public Planning createPlanningTask(@RequestBody Planning planning) {

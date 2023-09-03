@@ -10,12 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ServiceCenterRepo extends MongoRepository<ServiceCenter, ObjectId> {
 
-    @Query(value = "{'AvailableParts.spareParts.skuid': ?0}")
-    boolean doesSparePartExist(String skuid);
-
-    @Query(value = "{'AvailableParts.spareParts.skuid': ?0}", fields = "{'AvailableParts.$': 1}")
-    RequiredPart findPartBySkuId(String skuid);
 
     ServiceCenter findByServiceCenterName(String name);
-
 }

@@ -3,8 +3,8 @@ package com.rnerd.code.controllers.Global;
 import com.rnerd.code.config.jwt.JwtUtils;
 import com.rnerd.code.config.services.UserDetailsImpl;
 import com.rnerd.code.config.services.UserDetailsServicesImpl;
-import com.rnerd.code.payload.request.LoginRequest;
-import com.rnerd.code.payload.request.RegisterRequest;
+import com.rnerd.code.payload.request.Auth.LoginRequest;
+import com.rnerd.code.payload.request.Auth.RegisterRequest;
 import com.rnerd.code.payload.response.ResponseMsg;
 import com.rnerd.code.payload.response.ResponseUserDetails;
 import com.rnerd.code.services.AuthService;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(value = "http://localhost:3000", maxAge = 3000, allowCredentials = "true")
+@CrossOrigin(origins = "http://172.31.52.191:3000", maxAge = 3000, allowCredentials = "true")
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthController {
@@ -31,7 +31,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<Map<String, String>> register(@Valid @RequestBody RegisterRequest request) {
-        return authService.register(request.getUsername(), request.getPassword(), request.getEmail(), request.getRole());
+        return authService.register(request.getUsername(), request.getPassword(), request.getEmail(), request.getRole(), request.getEmployeeAt());
     }
 
     @PostMapping("/login")
@@ -42,14 +42,19 @@ public class AuthController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<Map<String, String>> getUser(HttpServletRequest request, HttpServletResponse response){
-        String username = jwtUtils.getUserNameFromJwtToken(jwtUtils.getJwtFromCookies(request));
+    public ResponseEntity<Map<String, String>> getUser(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String username = jwtUtils.getUserNameFromJwtToken(jwtUtils.getJwtFromCookies(request));
 
-        UserDetailsImpl user = userDetailsService.loadUserByUsername(username);
+            UserDetailsImpl user = userDetailsService.loadUserByUsername(username);
 
-        ResponseUserDetails res = new ResponseUserDetails(user);
+            ResponseUserDetails res = new ResponseUserDetails(user);
 
-        return ResponseEntity.ok().body(res.getDetails());
+            return ResponseEntity.ok().body(res.getDetails());
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(ResponseMsg.Msg(e.getMessage()));
+        }
+
     }
 
 

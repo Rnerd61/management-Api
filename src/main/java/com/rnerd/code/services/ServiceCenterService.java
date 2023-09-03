@@ -3,13 +3,15 @@ package com.rnerd.code.services;
 import com.rnerd.code.config.jwt.JwtUtils;
 import com.rnerd.code.config.services.UserDetailsImpl;
 import com.rnerd.code.config.services.UserDetailsServicesImpl;
+import com.rnerd.code.models.Globals.EmployeeModel;
 import com.rnerd.code.models.Globals.SpareParts;
 import com.rnerd.code.models.PlanningTeam.PlanningReq;
 import com.rnerd.code.models.Globals.RequiredPart;
 import com.rnerd.code.models.ServiceTeam.CustomerModel;
 import com.rnerd.code.models.ServiceTeam.ServiceCenter;
-import com.rnerd.code.payload.request.CustomerReq;
-import com.rnerd.code.payload.request.RequestPartFormat;
+import com.rnerd.code.payload.request.SC.Customer.CustomerReq;
+import com.rnerd.code.payload.request.SC.RequestPartFormat;
+import com.rnerd.code.repository.Global.AuthRepo;
 import com.rnerd.code.repository.Global.ProductsRepo;
 import com.rnerd.code.repository.Global.SparePartsRepo;
 import com.rnerd.code.repository.Planning.PlanningReqRepo;
@@ -38,12 +40,20 @@ public class ServiceCenterService {
     private final MongoTemplate mongoTemplate;
     private final PlanningReqRepo planningReqRepo;
     private final ProductsRepo productsRepo;
+    private final AuthRepo authRepo;
 
 
-    public String AddCustomer(CustomerReq customerReq) throws Exception {
+    public String AddCustomer(HttpServletRequest request, CustomerReq customerReq) throws Exception {
 
         CustomerModel customerModel = new CustomerModel(customerReq.getCustomerName(), customerReq.getProductId(), customerReq.getEmail());
         customerRepo.insert(customerModel);
+
+        String username = jwtUtils.getUserNameFromJwtToken(jwtUtils.getJwtFromCookies(request));
+        EmployeeModel employee = authRepo.findByUsername(username);
+
+        ServiceCenter serviceCenter = serviceCenterRepo.findByServiceCenterName(employee.getEmployeeAt());
+        serviceCenter.getCustomers().add(customerModel);
+
         return "Details Added Successfully";
 
     }
@@ -71,7 +81,7 @@ public class ServiceCenterService {
         return;
     }
 
-    private ServiceCenter getServiceCenter(HttpServletRequest request, HttpServletResponse response){
+    private ServiceCenter getServiceCenter(HttpServletRequest request, HttpServletResponse response) throws Exception{
         String username = jwtUtils.getUserNameFromJwtToken(jwtUtils.getJwtFromCookies(request));
         UserDetailsImpl Employee = userDetailsService.loadUserByUsername(username);
 
@@ -98,7 +108,7 @@ public class ServiceCenterService {
         planningReqRepo.save(RequestedParts);
     }
 
-    public String UsePartService(HttpServletRequest request, HttpServletResponse response, String skuId, Integer quantity){
+    public String UsePartService(HttpServletRequest request, HttpServletResponse response, String skuId, Integer quantity) throws Exception{
         ServiceCenter serviceCenter = getServiceCenter(request, response);
         RequiredPart ExistingPart = serviceCenter.getRequiredPart().stream().filter(part -> part.getSpareParts().getSkuid().equals(skuId)).findFirst().orElse(null);
 
@@ -118,14 +128,14 @@ public class ServiceCenterService {
 
     }
 
-    public List<RequiredPart> AvailablePartService(HttpServletRequest request, HttpServletResponse response){
+    public List<RequiredPart> AvailablePartService(HttpServletRequest request, HttpServletResponse response) throws Exception{
         ServiceCenter serviceCenter = getServiceCenter(request, response);
         return serviceCenter.getRequiredPart();
     }
 
 
-    public void AddCustomerRequirement(String customerName, String skuid) {
-        CustomerModel customer = customerRepo.findByCustomerName(customerName);
+    public void AddCustomerRequirement(String customername, String skuid) {
+        CustomerModel customer = customerRepo.findByCustomerName(customername);
         SpareParts sparePart = sparePartsRepo.findBySkuid(skuid);
 
         customer.getSparePartsRequired().add(sparePart);

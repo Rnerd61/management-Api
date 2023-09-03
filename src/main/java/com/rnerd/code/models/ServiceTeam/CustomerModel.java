@@ -26,21 +26,21 @@ public class CustomerModel {
     private ObjectId id;
 
     @NotBlank @Indexed(unique = true)
-    private String CustomerName;
+    private String customerName;
 
     @NotBlank
-    private String ProductId;
+    private String productId;
 
     @NotBlank @Email
-    private String Email;
+    private String email;
 
     @DBRef
     private List<SpareParts> SparePartsRequired = new ArrayList<>();
 
 
     public CustomerModel(String customerName, String productId, String email) {
-        this.CustomerName = customerName;
-        this.ProductId = productId;
-        this.Email = email;
+        this.customerName = customerName;
+        this.productId = productId;
+        this.email = email;
     }
 }

@@ -9,6 +9,8 @@ import com.rnerd.code.repository.Warehouse.WarehouseReqRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class WarehouseService {
@@ -18,9 +20,10 @@ public class WarehouseService {
     private final WarehouseReqRepo warehouseReqRepo;
 
 
-    public Integer CheckAvailService(String skuId, char zone){
+    public Integer CheckAvailService(String skuid, char zone){
         Warehouse warehouse = warehouseRepo.findByZone(zone);
-        RequiredPart GotPart =  warehouse.getParts().stream().filter(parts -> parts.getSpareParts().getSkuid().equals(skuId)).findFirst().orElse(null);
+
+        RequiredPart GotPart =  warehouse.getParts().stream().filter(parts -> parts.getSpareParts().getSkuid().equals(skuid)).findFirst().orElse(null);
         if(GotPart!=null){
             return GotPart.getQuantity();
         }

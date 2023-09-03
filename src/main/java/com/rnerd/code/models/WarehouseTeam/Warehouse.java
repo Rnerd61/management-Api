@@ -1,6 +1,7 @@
 package com.rnerd.code.models.WarehouseTeam;
 
 import com.rnerd.code.models.Globals.RequiredPart;
+import com.rnerd.code.payload.request.InitialSetup.addWareHouse;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,6 +11,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "warehouse")
@@ -27,6 +29,10 @@ public class Warehouse {
     private char zone;
 
     @DBRef
-    private List<RequiredPart> parts;
+    private List<RequiredPart> parts = new ArrayList<>();
 
+    public Warehouse(addWareHouse req) {
+        this.name = req.getName();
+        this.zone = req.getZone();
+    }
 }

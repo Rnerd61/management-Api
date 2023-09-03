@@ -1,4 +1,4 @@
-package com.rnerd.code.payload.request;
+package com.rnerd.code.payload.request.Auth;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

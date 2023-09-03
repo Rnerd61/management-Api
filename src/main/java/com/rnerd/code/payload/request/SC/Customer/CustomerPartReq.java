@@ -1,5 +1,6 @@
-package com.rnerd.code.payload.request;
+package com.rnerd.code.payload.request.SC.Customer;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +9,9 @@ import lombok.Setter;
 @Setter
 @Getter
 public class CustomerPartReq {
-    String CustomerName;
+    @NotBlank
+    String customerName;
+
+    @NotBlank
     String skuid;
 }

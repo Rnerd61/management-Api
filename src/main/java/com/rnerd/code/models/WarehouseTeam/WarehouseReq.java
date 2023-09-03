@@ -14,6 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @Data
@@ -37,16 +38,4 @@ public class WarehouseReq {
     @DBRef
     private RequiredPart requiredPart;
 
-    @NotBlank
-    private String skuId;
-
-    public WarehouseReq(ObjectId id, String from, Warehouse warehouse, String description, DateTimeFormat createdAt, RequiredPart requiredPart) {
-        this.id = id;
-        this.from = from;
-        this.warehouse = warehouse;
-        this.description = description;
-        this.CreatedAt = createdAt;
-        this.requiredPart = requiredPart;
-        this.skuId = requiredPart.getSpareParts().getSkuid();
-    }
 }

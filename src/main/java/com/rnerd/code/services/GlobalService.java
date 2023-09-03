@@ -2,8 +2,8 @@ package com.rnerd.code.services;
 
 import com.rnerd.code.models.Globals.Products;
 import com.rnerd.code.models.Globals.SpareParts;
-import com.rnerd.code.payload.request.ProductReq;
-import com.rnerd.code.payload.request.SparePartReq;
+import com.rnerd.code.payload.request.Globals.ProductReq;
+import com.rnerd.code.payload.request.Globals.SparePartReq;
 import com.rnerd.code.repository.Global.ProductsRepo;
 import com.rnerd.code.repository.Global.SparePartsRepo;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.rnerd.code.controllers;
+package com.rnerd.code.controllers.RoleBased;
 
 import com.rnerd.code.models.Globals.Status;
 import com.rnerd.code.models.WarehouseTeam.WarehouseReq;
@@ -16,6 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://172.31.52.191:3000", maxAge = 3000, allowCredentials = "true")
 @RequestMapping("/api/v1/wt")
 public class WarehouseController {
 
@@ -39,7 +40,7 @@ public class WarehouseController {
     @GetMapping("/delivered/:skuid")
     public ResponseEntity<Map<String, String>> delivered(@RequestParam String skuid) throws Exception{
         WarehouseReq req = warehouseReqRepo.findBySkuId(skuid);
-        serviceCenterService.AddSparePart(req.getFrom(), req.getSkuId(), req.getRequiredPart().getQuantity());
+        serviceCenterService.AddSparePart(req.getFrom(), req.getRequiredPart().getSpareParts().getSkuid(), req.getRequiredPart().getQuantity());
         req.getRequiredPart().setCurrentStatus(Status.COMPLETED);
         warehouseReqRepo.delete(req);
 

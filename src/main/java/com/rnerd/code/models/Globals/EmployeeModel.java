@@ -37,10 +37,4 @@ public class EmployeeModel {
     @NotBlank
     private String EmployeeAt;
 
-    public EmployeeModel(String username, String password, String email, Roles role) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.role = role;
-    }
 }

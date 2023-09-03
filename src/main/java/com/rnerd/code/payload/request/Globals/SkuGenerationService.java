@@ -1,4 +1,4 @@
-package com.rnerd.code.payload.request;
+package com.rnerd.code.payload.request.Globals;
 
 import com.rnerd.code.models.Globals.SpareParts;
 import com.rnerd.code.repository.Global.SparePartsRepo;

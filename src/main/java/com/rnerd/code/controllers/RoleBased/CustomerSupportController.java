@@ -1,4 +1,4 @@
-package com.rnerd.code.controllers;
+package com.rnerd.code.controllers.RoleBased;
 
 import com.rnerd.code.models.SupportTeam.CustomerSupport;
 import com.rnerd.code.services.CustomerSupportService;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(value = "http://localhost:3000", maxAge = 3000, allowCredentials = "true")
+@CrossOrigin(origins = "http://172.31.52.191:3000", maxAge = 3000, allowCredentials = "true")
 @RequestMapping("/api/v1/cs")
 public class CustomerSupportController {
 

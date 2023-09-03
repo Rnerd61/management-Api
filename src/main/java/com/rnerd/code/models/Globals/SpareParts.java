@@ -1,21 +1,15 @@
 package com.rnerd.code.models.Globals;
 
-import com.rnerd.code.payload.request.ProductReq;
-import com.rnerd.code.payload.request.SkuGenerationService;
-import com.rnerd.code.payload.request.SparePartReq;
+import com.rnerd.code.payload.request.Globals.SparePartReq;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Document(collection = "spareParts")
 @Getter

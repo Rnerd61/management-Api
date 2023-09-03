@@ -28,8 +28,18 @@ public class JwtUtils {
 
     final String jwtCookie = "access_token";
 
-    public String getJwtFromCookies(HttpServletRequest request) {
+    public String getJwtFromCookies(HttpServletRequest request) throws Exception {
         Cookie cookie = WebUtils.getCookie(request, jwtCookie);
+        if(cookie==null) {
+            String authCookie = request.getHeader("Auth");
+            if (authCookie == null) {
+                throw new JwtException("Cookie Not FOund");
+            }else {
+                authCookie = authCookie.split("=")[1];
+                return authCookie;
+            }
+        }
+
         if (cookie != null) {
             return cookie.getValue();
         } else {

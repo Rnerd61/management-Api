@@ -1,8 +1,8 @@
 package com.rnerd.code.models.ServiceTeam;
 
 
-import com.rnerd.code.models.Globals.EmployeeModel;
 import com.rnerd.code.models.Globals.RequiredPart;
+import com.rnerd.code.payload.request.InitialSetup.addServiceCenterReq;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,18 +25,25 @@ public class ServiceCenter {
     private ObjectId id;
 
     @NotBlank
-    private String ServiceCenterName;
+    private String serviceCenterName;
 
     @NotBlank
-    private String Zone;
+    private String zone;
 
     @NotBlank
-    private String Address;
+    private String address;
 
-    @DBRef
-    private List<EmployeeModel> employees = new ArrayList<>();
+    private List<String> employees = new ArrayList<>();
 
     @DBRef
     private List<RequiredPart> RequiredPart = new ArrayList<>();
+
+    @DBRef List<CustomerModel> customers = new ArrayList<>();
+
+    public ServiceCenter(addServiceCenterReq req) {
+        serviceCenterName = req.getServiceCenterName();
+        zone = req.getZone();
+        address = req.getAddress();
+    }
 
 }

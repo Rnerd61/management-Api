@@ -1,18 +1,17 @@
-package com.rnerd.code.payload.request;
+package com.rnerd.code.payload.request.SC;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
 @AllArgsConstructor
-public class addPartReq {
+public class UsePartReq {
     @NotBlank
-    String productSkuId;
+    String skuid;
 
     @NotBlank
-    String partSkuId;
+    Integer quantity;
 }

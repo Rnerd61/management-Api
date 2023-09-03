@@ -3,6 +3,7 @@ package com.rnerd.code.services;
 
 import com.rnerd.code.models.PlanningTeam.Planning;
 import com.rnerd.code.models.PlanningTeam.PlanningReq;
+import com.rnerd.code.models.WarehouseTeam.WarehouseReq;
 import com.rnerd.code.repository.Planning.PlanningRepo;
 import com.rnerd.code.repository.Planning.PlanningReqRepo;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,12 @@ public class PlanningService {
 
     private final PlanningRepo planningRepo;
     private final PlanningReqRepo planningReqRepo;
+    private final WarehouseService warehouseService;
+
+    public String ForwardReq(WarehouseReq req) {
+
+        return warehouseService.GetReqService(req);
+    }
 
     public List<Planning> getAllPlanningTasks(Integer pageNumber) {
         int page = pageNumber;
@@ -62,4 +69,6 @@ public class PlanningService {
     public void deletePlanningTask(ObjectId id) {
         planningRepo.deleteById(id);
     }
+
+
 }

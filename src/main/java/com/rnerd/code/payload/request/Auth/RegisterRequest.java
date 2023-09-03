@@ -1,4 +1,4 @@
-package com.rnerd.code.payload.request;
+package com.rnerd.code.payload.request.Auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -16,7 +16,7 @@ public class RegisterRequest {
     private String username;
 
     @NotBlank
-    @Size(min = 6, max = 40)
+    @Size(min = 3, max = 40)
     private String password;
 
 
@@ -27,4 +27,7 @@ public class RegisterRequest {
 
     @NotBlank
     private String role;
+
+    @NotBlank
+    private String employeeAt;
 }

@@ -1,14 +1,12 @@
 package com.rnerd.code.models.Globals;
 
-import com.rnerd.code.payload.request.ProductReq;
-import com.rnerd.code.payload.request.SparePartReq;
+import com.rnerd.code.payload.request.Globals.ProductReq;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
