@@ -1,7 +1,3 @@
-<!-- <a href="https://aimeos.org/">
-    <img src="https://aimeos.org/fileadmin/template/icons/logo.png" alt="Aimeos logo" title="Aimeos" align="right" height="60" />
-</a> -->
-
 # Xiaomi Parts-management project
 
 [![License](https://poser.pugx.org/aimeos/aimeos-typo3/license.svg)](https://www.gnu.org/licenses/agpl-3.0.en.html)
@@ -21,10 +17,16 @@ This project is part of [Ode2Code 3.0](https://unstop.com/competitions/xiaomi-od
 -   [Prerequesites](#prerequesites)
     -   [Frontend](#frontend)
     -   [Backend](#backend)
--   [Installation setup](#installation-setup)
+-   [Installation Setup](#installation-setup)
     -   [Frontend](#frontend)
     -   [Backend](#backend)
 -   [Api EndPoints](#api-endpoints)
+    -   [Authentication](#authentication)
+    -   [Service Team](#service-team)
+    -   [Planning Team](#planning-team)
+    -   [Warehouse Team](#warehouse-team)
+    -   [Customer Support Team](#customer-support-team)
+-   [User Types and Use-Cases](#user-types-and-use-cases)
 -   [License](#license)
 -   [Links](#links)
 
@@ -35,7 +37,7 @@ Xiaomi Ode2Code 3.0 is developed using the following technologies:
 -   Frontend: React.js, HTML, Tailwind CSS
 -   Backend: Java with Spring Boot Framework
 
-## Prerequisites
+## Prerequesites
 
 Before you begin, ensure you have the following prerequisites for both the frontend and backend components of the project.
 
@@ -48,7 +50,7 @@ Before you begin, ensure you have the following prerequisites for both the front
 -   Java Development Kit (JDK)
 -   gradlew or InteliJ Idea
 
-## Installation & Setup
+## Installation Setup
 
 Default port for frontend is 3000, and for backend 8000.
 
@@ -65,7 +67,7 @@ Follow these steps to set up the Xiaomi Ode2Code 3.0 project on your local machi
     npm start
     ```
 
-   Alternatively yarn can also be used.
+    Alternatively yarn can also be used.
 
 ### Backend
 
@@ -76,27 +78,64 @@ Follow these steps to set up the Xiaomi Ode2Code 3.0 project on your local machi
     ./gradlew build
     ./gradlew bootRun
     ```
-   alternatively open cloned folder in InteliJ Idea.
+    alternatively open cloned folder in InteliJ Idea.
 
-##
+## Api Endpoints
 
-## License
+</span> <span style="font-size: 18px;">[postman](https://app.getpostman.com/join-team?invite_code=aadcaba11f25ae0f27b3b7e90969b199&target_code=8cdb5b23807701c4edf899ab36f16724)</span> endpoints collection
 
-## Links
+### Authentication
 
--
+-   `/api/v1/auth/register` - To create new employee
+-   `/api/v1/auth/login` - Employee Login
+-   `/api/v1/auth/user` - Get details of Logged in Employee
 
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+### Service team
 
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+-   `/api/v1/sc/customer` - Create New customer
+-   `/api/v1/sc/customer/RequiredPart` - Add required part for the customer
+-   `/api/v1/sc/AvailableParts` - Check Availability of parts in its stock
+-   `/api/v1/sc/UsedParts` - If available use that part accordance to customer requirement
+-   `/api/v1/sc/ReqPart` - If not send request to planning team for parts and its quantity
+
+### Planning team
+
+-   `/api/v1/pt/getAllPlanningTasks` - fetch all pending planning tasks
+-   `/api/v1/pt/getRequests` - fetch all incoming requests from service centers
+-   `/api/v1/pt/createPlanningTask` - create a planning schedule from incoming requests
+-   `/api/v1/pt/forward` - forward request to closest warehouses after checking availability of parts
+-   `/api/v1/pt/{id}` - get, update and delete planning task by id
+
+### Warehouse team
+
+-   `/api/v1/wt/AvailabilityCheck` - check availability of parts
+-   `/api/v1/wt/dispatch` - dispatch required parts to service center
+-   `/api/v1/wt/delivered` - status update after delivery
+
+### Customer Support Team
+
+-   `/api/v1/cs/` - get all inquiries
+-   `/api/v1/cs/hello` - initiate chat
+-   `/api/v1/cs/{id}` - get, delete, update inquiry by id
+
+## User Types and Use-Cases
+
+1. **Service Centers**
+
+    - Create Job Sheets for customers.
+    - Diagnose devices and identify parts requirements.
+    - Consume available parts for repairs.
+    - Send part requests for unavailable parts.
+
+2. **Planning Team**
+
+    - Identify daily part requirements from service centers.
+    - Check part availability across warehouses.
+    - Prepare material dispatch plans.
+
+3. **Warehouse Team**
+
+    - Dispatch materials to service centers based on plans.
+    - Receive and map parts to repair orders.
+
+4. **Customer Support** - Address customer queries about repair orders.
