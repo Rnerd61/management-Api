@@ -25,12 +25,6 @@ This project is part of [Ode2Code 3.0](https://unstop.com/competitions/xiaomi-od
     -   [Frontend](#frontend)
     -   [Backend](#backend)
 -   [Api EndPoints](#api-endpoints)
-    -   [Download the Aimeos Page Tree t3d file](#download-the-aimeos-page-tree-t3d-file)
-    -   [Go to the Import View](#go-to-the-import-view)
-    -   [Upload the page tree file](#upload-the-page-tree-file)
-    -   [Go to the import view](#go-to-the-import-view)
-    -   [Import the page tree](#import-the-page-tree)
-    -   [SEO-friendly URLs](#seo-friendly-urls)
 -   [License](#license)
 -   [Links](#links)
 
