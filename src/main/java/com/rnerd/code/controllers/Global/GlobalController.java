@@ -6,7 +6,6 @@ import com.rnerd.code.models.Globals.SpareParts;
 import com.rnerd.code.models.ServiceTeam.ServiceCenter;
 import com.rnerd.code.models.WarehouseTeam.Warehouse;
 import com.rnerd.code.models.WarehouseTeam.WarehouseReq;
-import com.rnerd.code.payload.request.*;
 import com.rnerd.code.repository.Global.ProductsRepo;
 import com.rnerd.code.repository.Global.RequiredPartRepo;
 import com.rnerd.code.repository.Global.SparePartsRepo;
@@ -32,11 +31,6 @@ import java.util.List;
 public class GlobalController {
 
     private final GlobalService globalService;
-    private final ProductsRepo productsRepo;
-    private final SparePartsRepo sparePartsRepo;
-    private final ServiceCenterRepo serviceCenterRepo;
-    private final WarehouseRepo warehouseRepo;
-    private final RequiredPartRepo requiredPartRepo;
 
     @GetMapping("/getProducts")
     public ResponseEntity<List<Products>> getProducts(){
