@@ -40,9 +40,12 @@ public class ServiceCenterService {
     private final ProductsRepo productsRepo;
 
 
-    public void AddCustomer(CustomerReq customerReq) throws Exception{
+    public String AddCustomer(CustomerReq customerReq) throws Exception {
+
         CustomerModel customerModel = new CustomerModel(customerReq.getCustomerName(), customerReq.getProductId(), customerReq.getEmail());
         customerRepo.insert(customerModel);
+        return "Details Added Successfully";
+
     }
 
     public void AddSparePart(String serviceCentreName, String skuId, Integer quantity) throws Exception{
@@ -121,5 +124,11 @@ public class ServiceCenterService {
     }
 
 
+    public void AddCustomerRequirement(String customerName, String skuid) {
+        CustomerModel customer = customerRepo.findByCustomerName(customerName);
+        SpareParts sparePart = sparePartsRepo.findBySkuid(skuid);
 
+        customer.getSparePartsRequired().add(sparePart);
+        customerRepo.save(customer);
+    }
 }

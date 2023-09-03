@@ -1,9 +1,13 @@
 package com.rnerd.code.controllers;
 
 import com.rnerd.code.models.Globals.RequiredPart;
+import com.rnerd.code.models.Globals.SpareParts;
+import com.rnerd.code.models.ServiceTeam.CustomerModel;
+import com.rnerd.code.payload.request.CustomerPartReq;
 import com.rnerd.code.payload.request.CustomerReq;
 import com.rnerd.code.payload.request.RequestPartFormat;
 import com.rnerd.code.payload.response.ResponseMsg;
+import com.rnerd.code.repository.ServiceCenter.CustomerRepo;
 import com.rnerd.code.services.ServiceCenterService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,7 +29,16 @@ public class ServiceCenterController {
     @PostMapping("/customer")
     public ResponseEntity<Map<String, String>> CustomerDetailController(@Valid @RequestBody CustomerReq customerReq) throws Exception{
         Map<String, String> res;
-        serviceCenterService.AddCustomer(customerReq);
+
+        res = ResponseMsg.Msg(serviceCenterService.AddCustomer(customerReq));
+
+        return ResponseEntity.ok().body(res);
+    }
+
+    @PostMapping("/customerRequiredPart")
+    public ResponseEntity<Map<String, String>> CustomerDetailController(@RequestBody @Valid CustomerPartReq req) throws Exception{
+        Map<String, String> res;
+        serviceCenterService.AddCustomerRequirement(req.getCustomerName(), req.getSkuid());
         res = ResponseMsg.Msg("Details Added Successfully");
 
         return ResponseEntity.ok().body(res);

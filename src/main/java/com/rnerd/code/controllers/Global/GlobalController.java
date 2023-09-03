@@ -28,13 +28,13 @@ public class GlobalController {
     private final ProductsRepo productsRepo;
     private final SparePartsRepo sparePartsRepo;
 
-    @GetMapping("/getProduct")
+    @GetMapping("/getProducts")
     public ResponseEntity<List<Products>> getProducts(){
         return ResponseEntity.ok().body(globalService.getAllProductsService(0));
     }
 
 
-    @GetMapping("/getProduct/:id")
+    @GetMapping("/getProducts/:id")
     public ResponseEntity<Products> getProducts(@RequestParam String skuid){
         return ResponseEntity.ok().body(globalService.getProductService(skuid));
     }

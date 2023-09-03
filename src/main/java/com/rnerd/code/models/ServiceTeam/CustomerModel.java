@@ -4,11 +4,10 @@ package com.rnerd.code.models.ServiceTeam;
 import com.rnerd.code.models.Globals.SpareParts;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -19,12 +18,14 @@ import java.util.List;
 @Document(collection = "CustomerDetails")
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
+@Getter
 public class CustomerModel {
 
     @Id
     private ObjectId id;
 
-    @NotBlank
+    @NotBlank @Indexed(unique = true)
     private String CustomerName;
 
     @NotBlank
@@ -38,8 +39,8 @@ public class CustomerModel {
 
 
     public CustomerModel(String customerName, String productId, String email) {
-        CustomerName = customerName;
-        ProductId = productId;
-        Email = email;
+        this.CustomerName = customerName;
+        this.ProductId = productId;
+        this.Email = email;
     }
 }
