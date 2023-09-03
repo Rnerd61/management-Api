@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(value = "http://localhost:3000", maxAge = 3000)
+@CrossOrigin(value = "http://localhost:3000", maxAge = 3000, allowCredentials = "true")
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthController {
@@ -44,6 +44,7 @@ public class AuthController {
     @GetMapping("/user")
     public ResponseEntity<Map<String, String>> getUser(HttpServletRequest request, HttpServletResponse response){
         String username = jwtUtils.getUserNameFromJwtToken(jwtUtils.getJwtFromCookies(request));
+
         UserDetailsImpl user = userDetailsService.loadUserByUsername(username);
 
         ResponseUserDetails res = new ResponseUserDetails(user);

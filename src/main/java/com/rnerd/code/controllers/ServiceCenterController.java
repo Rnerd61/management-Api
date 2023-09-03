@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(value = "http://localhost:3000", maxAge = 3000, allowCredentials = "true")
 @RequestMapping("/api/v1/sc")
 @RequiredArgsConstructor
 public class ServiceCenterController {
