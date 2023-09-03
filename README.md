@@ -32,7 +32,7 @@ This project is part of [Ode2Code 3.0](https://unstop.com/competitions/xiaomi-od
 
 Xiaomi Ode2Code 3.0 is developed using the following technologies:
 
--   Frontend: [![React][React.js]][React-url], HTML, Tailwind CSS
+-   Frontend: React.js, HTML, Tailwind CSS
 -   Backend: Java with Spring Boot Framework
 
 ## Prerequisites
