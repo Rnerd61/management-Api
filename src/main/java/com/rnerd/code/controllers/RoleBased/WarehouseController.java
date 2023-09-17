@@ -46,7 +46,7 @@ public class WarehouseController {
         return ResponseEntity.ok().body(ResponseMsg.Msg(warehouseService.dispatchService(requiredPart)));
     }
 
-    @GetMapping("/delivered/:skuid")
+    @GetMapping("/delivered/{skuid}")
     public ResponseEntity<Map<String, String>> delivered(@RequestParam RequiredPart requiredPart) throws Exception{
         WarehouseReq req = warehouseReqRepo.findByRequiredPart(requiredPart);
         serviceCenterService.AddSparePart(req.getFrom(), req.getRequiredPart().getSpareParts().getSkuid(), req.getRequiredPart().getQuantity());

@@ -24,7 +24,7 @@ public class PlanningController {
 
     private final PlanningService planningService;
 
-    @GetMapping
+    @GetMapping("/getAllPlanningTasks")
     public List<Planning> getAllPlanningTasks(@RequestBody @Valid GetAllPlanningTasksReq req) {
         return planningService.getAllPlanningTasks(req.getPageNumber());
     }
@@ -40,7 +40,7 @@ public class PlanningController {
         return ResponseEntity.ok().body(ResponseMsg.Msg(res));
     }
 
-    @PostMapping
+    @PostMapping("/createPlanningTask")
     public Planning createPlanningTask(@RequestBody Planning planning) {
         return planningService.createPlanningTask(planning);
     }
